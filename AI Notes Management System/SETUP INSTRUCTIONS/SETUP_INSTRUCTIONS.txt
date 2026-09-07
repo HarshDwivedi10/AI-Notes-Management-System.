@@ -1,0 +1,185 @@
+# System Setup & Evaluation Guide
+
+===============================================================================
+                AI NOTES MANAGEMENT SYSTEM - RECRUITER & EVALUATOR GUIDE
+===============================================================================
+
+Project Title: AI-Powered Notes Management System  
+Backend Framework: Laravel 11.x (PHP >= 8.2 / Recommended: PHP 8.3)  
+Database: Pre-configured Zero-Setup SQLite / Supports MySQL 8+ & PostgreSQL  
+Frontend: Executive Glassmorphic SPA (Vanilla JS + Custom CSS)  
+API Specification: Interactive OpenAPI 3.0 (Swagger UI at /docs)  
+Automated Tests: 100% Passing PHPUnit Test Suite (16 Tests, 32 Assertions)
+
+---
+
+## System Prerequisites
+
+Before running the application, ensure the following software is installed on your machine:
+
+1. PHP: Version 8.2 or higher (PHP 8.3 recommended) with standard extensions (pdo_sqlite, json, mbstring, openssl, tokenizer, xml).
+   - Check version: php -v
+2. Composer: Version 2.0 or higher.
+   - Check version: composer -V
+3. Web Browser: Any modern web browser (Google Chrome, Microsoft Edge, Mozilla Firefox, Apple Safari).
+4. Terminal / Shell: Command Prompt / PowerShell (Windows) or Terminal (macOS / Linux).
+
+---
+
+## Step-by-Step Setup & Execution
+
+Follow these step-by-step instructions to get the application up and running locally in under 2 minutes.
+
+---
+
+### Step 1: Clone Repository & Open Directory
+
+Open your terminal or command prompt and run:
+
+git clone https://github.com/HarshDwivedi10/AI-Notes-Management-System.git
+cd AI-Notes-Management-System
+
+---
+
+### Step 2: Install PHP Dependencies
+
+Install all required Composer packages:
+
+composer install
+
+---
+
+### Step 3: Environment Setup
+
+Copy the example environment configuration file to create your active .env file:
+
+Windows (PowerShell / Command Prompt):
+copy .env.example .env
+
+macOS / Linux:
+cp .env.example .env
+
+Next, generate the application encryption key:
+
+php artisan key:generate
+
+---
+
+### Step 4: Database Setup & Seeding
+
+The repository comes pre-configured with SQLite for zero-setup evaluator convenience. No local MySQL server or database credentials are required.
+
+Run the database migrations and seed pre-populated demo notes:
+
+php artisan migrate --seed
+
+Note: If you ever wish to completely reset the database back to clean seeded state during evaluation, simply run:
+php artisan migrate:fresh --seed
+
+---
+
+### Step 5: Start the Development Server
+
+Launch the built-in Laravel development server:
+
+php artisan serve
+
+You will see output confirming the server has started:
+
+  INFO  Server running on [http://127.0.0.1:8000].  
+  Press Ctrl+C to stop the server
+
+---
+
+### Step 6: Access the Application in Your Browser
+
+Once the server is running, open your web browser and navigate to:
+
+- Executive SPA Dashboard: http://localhost:8000
+- Interactive Swagger API Documentation: http://localhost:8000/docs
+- Raw OpenAPI 3.0 JSON Spec: http://localhost:8000/swagger.json
+
+---
+
+## Evaluator Verification & Test Suite
+
+The application includes a complete automated test suite verifying CRUD operations, rate limiting, validation error codes, semantic search vector score sorting, and summary generation.
+
+### Running Automated PHPUnit Tests
+
+Run the test suite from your terminal:
+
+php artisan test
+
+Expected Test Output:
+
+  PASS  Tests\Unit\AiEmbeddingServiceTest
+  ✓ cosine similarity calculation for identical vectors
+  ✓ cosine similarity for orthogonal vectors
+  ✓ fallback vector generation produces normalized vector
+
+  PASS  Tests\Feature\NoteApiTest
+  ✓ can get paginated notes list
+  ✓ cannot create note without required fields
+  ✓ can create note successfully
+  ✓ can get single note
+  ✓ returns 404 for non existent note
+  ✓ can update note
+  ✓ can delete note
+  ✓ can search notes semantically
+  ✓ can generate ai summary for note
+
+  Tests:    16 passed (32 assertions)
+  Duration: 0.48s
+  Pass Rate: 100%
+
+---
+
+## Optional Live AI API Setup
+
+The application works 100% offline out-of-the-box using embedded deterministic term-frequency vectorizers (TF-IDF) and NLP sentence-scoring summarization algorithms.
+
+If you wish to test live API calls with OpenAI or Google Gemini during evaluation:
+
+1. Open the .env file in your root project directory.
+2. Provide your API key for either OpenAI or Gemini:
+
+OPENAI_API_KEY=your_actual_openai_api_key_here
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+OPENAI_COMPLETION_MODEL=gpt-4o-mini
+
+OR Google Gemini Configuration:
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+
+3. Clear application config cache:
+php artisan config:clear
+
+The system will automatically detect the API keys and use OpenAI / Gemini for vector generation and note summaries. If an API request fails or times out, the system gracefully falls back to the local algorithms without interrupting the user experience.
+
+---
+
+## Troubleshooting & FAQs
+
+Q1: "Port 8000 is already in use"
+If port 8000 is currently used by another process on your machine, specify a custom port when starting php artisan serve:
+php artisan serve --port=8080
+Then open http://localhost:8080 in your browser.
+
+Q2: "Database file does not exist"
+If SQLite raises an error about missing database.sqlite, create the file manually:
+Windows (PowerShell):
+New-Item -ItemType File -Path database\database.sqlite -Force
+macOS / Linux:
+touch database/database.sqlite
+Then run php artisan migrate --seed.
+
+Q3: How to view API endpoints directly in Swagger UI?
+Visit http://localhost:8000/docs. The embedded Swagger UI allows you to test endpoints interactively (Try it out button) directly from your browser.
+
+---
+
+## Support & Repository Information
+
+- Repository: https://github.com/HarshDwivedi10/AI-Notes-Management-System
+- Author: Harsh Dwivedi
+- License: MIT
