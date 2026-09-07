@@ -1,0 +1,58 @@
+# RESTful API Specification Reference
+
+1. Endpoint Overview
+
+---
+
+1. GET /api/notes
+   Description: Retrieve a paginated list of notes.
+   Parameters: page, limit, category
+   Example: /api/notes?page=1&limit=10&category=Documentation
+
+2. POST /api/notes
+   Description: Create a new note entry.
+   Request Body:
+   {
+   "title": "...",
+   "content": "...",
+   "category": "...",
+   "tags": [...]
+   }
+
+3. GET /api/notes/{id}
+   Description: Retrieve details of a specific note.
+   Path Parameter: id
+
+4. PUT /api/notes/{id}
+   Description: Update an existing note.
+   Path Parameter: id
+   Request Body:
+   {
+   "title": "...",
+   "content": "..."
+   }
+
+5. DELETE /api/notes/{id}
+   Description: Soft-delete a note.
+   Path Parameter: id
+
+6. GET /api/notes/search
+   Description: Perform AI-powered semantic vector search.
+   Parameters: q, limit
+   Example: /api/notes/search?q=storage architecture&limit=10
+
+7. POST /api/notes/{id}/summary
+   Description: Generate an AI-powered summary for a note.
+   Path Parameter: id
+
+8. OpenAPI / Swagger Specification
+
+---
+
+The complete OpenAPI 3.0 specification is available at:
+
+public/swagger.json
+
+Interactive API documentation is available through Swagger UI at:
+
+[http://localhost:8000/docs](http://localhost:8000/docs)
